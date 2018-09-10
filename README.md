@@ -8,7 +8,9 @@ The OpenWhisk Cognos Dashboard Embedded package provides a set of actions for in
 | openwhisk-cognos-dashboard | package  | webDomain, __bx_creds | Work with a Cognos Dashboard Embedded instance. |
 | create-dashboard           | action   | module, spec | Renders a Cognos Dashboard |
 | sample-module              | action   |  | Demonstrates an example module |
-| sample-dashboard           | sequence   |  | Demonstrates an example Dashboard |
+| sample-spec                | action   |  | Demonstrates an example spec |
+| sample-dashboard-edit      | sequence   |  | Demonstrates an example Dashboard in Edit mode |
+| sample-dashboard-view      | sequence   |  | Demonstrates an example Dashboard in View mode |
 
 ## Parameters
 | Parameter | Description |
