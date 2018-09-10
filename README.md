@@ -1,6 +1,6 @@
 # Cognos Dashboard Embedded Package
 
-The OpenWhisk Cognos Dashboard Embedded package provides a set of actions for interacting with Cognos Dashboard Embedded instances. These actions allow you to view or create Dashboards using data available in IBM Cloud Object Storage.
+The OpenWhisk Cognos Dashboard Embedded package provides a set of actions for interacting with Cognos Dashboard Embedded instances. These actions allow you to view and create Dashboards using data available in IBM Cloud Object Storage or more custom locations.
 
 ## OpenWhisk entities
 | Entity | Type | Parameters | Description |
