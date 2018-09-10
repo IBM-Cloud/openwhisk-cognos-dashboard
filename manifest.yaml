@@ -1,0 +1,37 @@
+packages:
+  openwhisk-cognos-dashboard:
+    version: 1.0
+    license: Apache-2.0
+    actions:
+      create-dashboard:
+        function: dist/Dashboard.js
+        runtime: nodejs:8
+        web: true
+      sample-module:
+        function: dist/SampleModule.js
+        runtime: nodejs:8
+      sample-spec:
+        function: dist/SampleSpec.js
+        runtime: nodejs:8
+    sequences:
+      sample-dashboard-edit:
+        actions: sample-module,create-dashboard
+        web: true
+      sample-dashboard-view:
+        actions: sample-spec,create-dashboard
+        web: true
+    apis:
+      Cognos Dashboard Embedded:
+        dashboard:
+          view:
+            create-dashboard:
+              method: GET
+              response: http
+          sample-edit:
+            sample-dashboard-edit:
+              method: GET
+              response: http
+          sample-view:
+            sample-dashboard-view:
+              method: GET
+              response: http
