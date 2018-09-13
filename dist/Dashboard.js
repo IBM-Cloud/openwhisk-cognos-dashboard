@@ -1,12 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const rp = require("request-promise");
 class WebResponse {
@@ -17,34 +9,33 @@ class WebResponse {
     }
 }
 exports.WebResponse = WebResponse;
-function main(params) {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (!params.__bx_creds) {
-            throw new Error(`No package binding found - use 'ibmcloud fn service bind' prior to running action`);
+async function main(params) {
+    if (!params.__bx_creds) {
+        throw new Error(`No package binding found - use 'ibmcloud fn service bind' prior to running action`);
+    }
+    const { api_endpoint_url: url, client_id: user, client_secret: pass } = params.__bx_creds['dynamic-dashboard-embedded'];
+    const { spec, module, webDomain = 'https://service.us.apiconnect.ibmcloud.com' } = params;
+    console.log(`Render module=${module !== undefined} spec=${spec !== undefined}`);
+    const session = await rp({
+        url: `${url}v1/session`,
+        headers: {
+            accept: 'application/json'
+        },
+        auth: {
+            user,
+            pass
+        },
+        json: true,
+        method: 'POST',
+        body: {
+            expiresIn: 3600,
+            webDomain
         }
-        const { api_endpoint_url: url, client_id: user, client_secret: pass } = params.__bx_creds['dynamic-dashboard-embedded'];
-        const { spec, module, webDomain = 'https://service.us.apiconnect.ibmcloud.com' } = params;
-        console.log(`Render module=${module !== undefined} spec=${spec !== undefined}`);
-        const session = yield rp({
-            url: `${url}v1/session`,
-            headers: {
-                accept: 'application/json'
-            },
-            auth: {
-                user,
-                pass
-            },
-            json: true,
-            method: 'POST',
-            body: {
-                expiresIn: 3600,
-                webDomain
-            }
-        });
-        if (!session.sessionCode) {
-            throw Error(`Unable to retrieve session code`);
-        }
-        const html = `
+    });
+    if (!session.sessionCode) {
+        throw Error(`Unable to retrieve session code`);
+    }
+    const html = `
     <!doctype html>
     <html lang="en">
     <head>
@@ -106,8 +97,7 @@ function main(params) {
     </body>
     </html>
   `;
-        return new WebResponse(html);
-    });
+    return new WebResponse(html);
 }
 exports.default = main;
 global.main = main; // required when using webpack
