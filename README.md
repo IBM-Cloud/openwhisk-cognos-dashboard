@@ -76,9 +76,11 @@ A sample Dashboard has been provided to test the package.
 4. Vist the link `<your route URL>/sample-edit` in your browser.
 5. Vist the link `<your route URL>/sample-view` in your browser.
 
-To use your own data sources, perform the following steps.
+To use your own data sources and dashboards, perform the following steps.
 
 1. Create a new Cloud Function's action similar to the Sample Module. To provide data, simply return an object with the `module` property that contains the [data source object](https://console.bluemix.net/docs/services/cognos-dashboard-embedded/working_with_datasources.html#working-with-data-sources) required by the Cognos Dashboard Embedded API. If you're rendering a canned Dashboard, return an object with the `spec` property that contains the specification.
+    - [Sample Module](https://github.com/IBM-Cloud/openwhisk-cognos-dashboard/blob/master/src/SampleModule.ts)
+    - [Sample Spec](https://github.com/IBM-Cloud/openwhisk-cognos-dashboard/blob/master/src/SampleSpec.ts)
 2. Create a web-enabled sequence that begins with your action and then calls the `openwhisk-cognos-dashboard/create-dashboard` action. An example is seen in the Sample Dashboard sequence.
    ```yaml
     sequences:
